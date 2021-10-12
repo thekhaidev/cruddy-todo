@@ -45,23 +45,30 @@ exports.readAll = (callback) => {
 
   fs.readdir(exports.dataDir, (err, data) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       callback(err);
     } else {
       var data = _.map(data, (value) => ({id: value.slice(0, 5), text: value.slice(0, 5)}));
       callback(null, data);
     }
-  })
-
+  });
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  // var text = items[id];
+  // if (!text) {
+  //   callback(new Error(`No item with id: ${id}`));
+  // } else {
+  //   callback(null, { id, text });
+  // }
+
+  fs.readFile(`${exports.dataDir}/${id}.txt`, (err, fileContents) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, {id, text: fileContents.toString()});
+    }
+  });
 };
 
 exports.update = (id, text, callback) => {
