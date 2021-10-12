@@ -22,7 +22,7 @@ const readCounter = (callback) => {
     if (err) {
       callback(null, 0);
     } else {
-      console.log('This is the value of Number(fileData): ' + Number(fileData))
+      console.log('This is the value of Number(fileData): ' + Number(fileData));
       callback(null, Number(fileData));
     }
   });
@@ -34,7 +34,7 @@ const writeCounter = (count, callback) => {
     if (err) {
       throw ('error writing counter');
     } else {
-      console.log('This is the counter string value: ' + counterString)
+      console.log('This is the counter string value: ' + counterString);
       callback(null, counterString);
     }
   });
@@ -43,8 +43,8 @@ const writeCounter = (count, callback) => {
 // Public API - Fix this function //////////////////////////////////////////////
 
 exports.getNextUniqueId = (callback) => {
-  readCounter(readCounterCB = (err, number) => {
-    writeCounter((number + 1), writeCounterCB = (err, counterString) => {
+  readCounter(readCounterCB = (err, counter) => {
+    writeCounter((counter + 1), writeCounterCB = (err, counterString) => {
       callback(null, counterString);
     });
   });
