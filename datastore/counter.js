@@ -16,10 +16,13 @@ const zeroPaddedNumber = (num) => {
 };
 
 const readCounter = (callback) => {
+// parameters of readFile are(directory and then callback function)
+// parameters of callback are error and data of file
   fs.readFile(exports.counterFile, (err, fileData) => {
     if (err) {
       callback(null, 0);
     } else {
+      console.log('This is the value of Number(fileData): ' + Number(fileData))
       callback(null, Number(fileData));
     }
   });
@@ -31,6 +34,7 @@ const writeCounter = (count, callback) => {
     if (err) {
       throw ('error writing counter');
     } else {
+      console.log('This is the counter string value: ' + counterString)
       callback(null, counterString);
     }
   });
@@ -38,14 +42,18 @@ const writeCounter = (count, callback) => {
 
 // Public API - Fix this function //////////////////////////////////////////////
 
-exports.getNextUniqueId = (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    counter = counter + 1;
-    console.log('This is the unique Id: ' + zeroPaddedNumber(counter))
-    return zeroPaddedNumber(counter);
-  }
+exports.getNextUniqueId = (callback) => {
+  readCounter(readCounterCB = (err, number) => {
+    writeCounter((number + 1), writeCounterCB = (err, counterString) => {
+      callback(null, counterString);
+    });
+  });
+
+  // counter++
+  // console.log('This is the unique Id: ' , zeroPaddedNumber(counter));
+  // // console.log(counter)
+  // // console.log(callback)
+  // return zeroPaddedNumber(counter);
 };
 
 
