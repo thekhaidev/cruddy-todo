@@ -29,7 +29,6 @@ exports.create = (text, callback) => {
       }
     });
   });
-
 };
 
 exports.readAll = (callback) => {
@@ -104,14 +103,11 @@ exports.delete = (id, callback) => {
   // } else {
   //   callback();
   // }
-
   fs.access(`${exports.dataDir}/${id}.txt`, fs.F_OK, (err) => {
-
     if (err) {
       callback(err);
       return;
     }
-
     fs.unlink(`${exports.dataDir}/${id}.txt`, (err) => {
       if (err) {
         callback(err);
